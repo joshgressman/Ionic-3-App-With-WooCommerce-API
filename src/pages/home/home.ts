@@ -11,8 +11,8 @@ import * as WC from 'woocommerce-api';
   templateUrl: 'home.html'
 })
 export class HomePage {
-
   WooCommerce: any;
+  products: any[];
 
   constructor(public navCtrl: NavController) {
    this.WooCommerce = WC({
@@ -21,7 +21,8 @@ export class HomePage {
      consumerSecret: "cs_f394c2fa6678df9f1a3a3feebae63e24ef06662a"
    });
    this.WooCommerce.getAsync("products").then( (data)=> {
-     console.log("data", data);
+     this.products = JSON.parse(data.body).products;
+     console.log(this.products);
    }, (err) => {
      console.log(err);
    });
