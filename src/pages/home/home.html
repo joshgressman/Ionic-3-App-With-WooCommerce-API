@@ -17,7 +17,7 @@
   </ion-card>
   <ion-grid>
    <ion-row>
-    <ion-slides >
+    <ion-slides #productSlides>
      <ion-slide *ngFor="let product of products">
       <ion-card no-padding>
        <img [src]="product.featured_src"/>
