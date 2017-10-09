@@ -26,7 +26,7 @@ export class HomePage {
      consumerSecret: "cs_f394c2fa6678df9f1a3a3feebae63e24ef06662a"
    });
 
-    this.loadMoreProducts()
+    this.loadMoreProducts(null);
 
    this.WooCommerce.getAsync("products").then( (data)=> {
      this.products = JSON.parse(data.body).products;
@@ -43,12 +43,25 @@ export class HomePage {
         this.productSlides.slideTo(0);
       }
       this.productSlides.slideNext()
-    }, 3000)
+    }, 5000)
   }
 
-  loadMoreProducts() {
+  loadMoreProducts(event) {
+
+     if(event == null) {
+       this.page = 2;
+       this.moreProducts = [];
+     } else {
+       this.page ++;
+     }
+
     this.WooCommerce.getAsync("products?page=" + this.page).then( (data)=> {
-      this.moreProducts = JSON.parse(data.body).products;
+      this.moreProducts = this.moreProducts.concat(JSON.parse(data.body).products);
+
+      if(event != null) {
+        event.complete();
+      }
+
       console.log(this.products);
     }, (err) => {
       console.log(err);
