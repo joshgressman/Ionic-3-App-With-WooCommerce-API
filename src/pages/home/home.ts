@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { NavController, Slides } from 'ionic-angular';
+import { NavController, Slides, ToastController } from 'ionic-angular';
 
 //woocommcer api imported via npm install woocommerce-api --save
 //WC is the local variable
@@ -18,7 +18,7 @@ export class HomePage {
 
   @ViewChild('productSlides') productSlides: Slides;
 
-  constructor(public navCtrl: NavController) {
+  constructor(public navCtrl: NavController, public toastCtrl: ToastController) {
    this.page = 2;
    this.WooCommerce = WC({
      url: "http://localhost:8888/woocommerce",
@@ -60,6 +60,16 @@ export class HomePage {
 
       if(event != null) {
         event.complete();
+      }
+
+      if(JSON.parse(data.body).products.length < 10) {
+        //stops the event if there are less than 10 events
+        event.enable(false);
+
+        this.toastCtrl.create({
+          message: "All products have been loaded",
+          duration: 4000
+        }).present()
       }
 
       console.log(this.products);
