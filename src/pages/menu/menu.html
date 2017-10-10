@@ -6,7 +6,18 @@
     </ion-toolbar>
   </ion-header>
 
-  <ion-content>
+  <ion-content class="card-background-page ">
+
+    <ion-card>
+      <img src="./assets/images/rock.png" />
+      <div class="card-title">
+        WooIOnic
+      </div>
+      <div class="card-subtitle">
+        Keep Shopping
+      </div>
+    </ion-card>
+
     <ion-list>
      <ion-item *ngFor="let category of categories" text-wrap>
       <ion-icon [name]="category.icon" item-left large></ion-icon>
