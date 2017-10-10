@@ -13,9 +13,11 @@ import * as WC from 'woocommerce-api';
 export class MenuPage {
   homePage: Component;
   WooCommerce: any;
+  categories: any[];
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
    this.homePage = HomePage;
+   this.categories = [];
 
    this.WooCommerce = WC({
      url: "http://localhost:8888/woocommerce",
@@ -25,6 +27,16 @@ export class MenuPage {
 
    this.WooCommerce.getAsync("products/categories").then((data) => {
     console.log("cat",JSON.parse(data.body).product_categories);
+    let temp: any[] = JSON.parse(data.body).product_categories;
+
+    //Loops through the categories array and pushes only parent cateories
+    for(let i = 0; i < temp.length; i++){
+      if(temp[i].parent == 0){
+        this.categories.push(temp[i]);
+      }
+    }
+
+
    }, (err) => {
      console.log(err);
    });
