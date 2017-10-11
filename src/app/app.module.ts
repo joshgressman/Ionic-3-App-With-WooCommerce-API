@@ -25,7 +25,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     MyApp,
     HomePage,
     MenuPage,
-     ProductsByCategoryPage
+    ProductsByCategoryPage
   ],
   providers: [
     StatusBar,

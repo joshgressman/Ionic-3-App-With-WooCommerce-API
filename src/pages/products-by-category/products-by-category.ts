@@ -17,6 +17,7 @@ export class ProductsByCategoryPage {
    this.page = 1;
    //receives catagory from nav params sent from the MenuPage
    this.category = this.navParams.get('category');
+   console.log('cat', this.category);
     this.WooCommerce = WC({
       url: "http://localhost:8888/woocommerce",
       consumerKey: "ck_68671b908096258d3744b8ff2511be0816df7c98",

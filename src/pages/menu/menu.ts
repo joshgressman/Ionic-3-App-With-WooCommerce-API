@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { HomePage } from '../home/home';
+import { ProductsByCategoryPage} from '../products-by-category/products-by-category';
+
 //woocommcer api imported via npm install woocommerce-api --save
 //WC is the local variable
 //With the WC variable you can use the functions with the woocommerce aPI
@@ -56,6 +58,10 @@ export class MenuPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad MenuPage');
+  }
+
+  openCategoryPage(category){
+    this.navCtrl.setRoot(ProductsByCategoryPage, {"category": category})
   }
 
 }
