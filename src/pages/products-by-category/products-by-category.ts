@@ -11,6 +11,7 @@ export class ProductsByCategoryPage {
   products: any[];
   page: number;
   category: any;
+  moreProducts: any[];
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
    //Displays products from the first page
@@ -35,6 +36,21 @@ export class ProductsByCategoryPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ProductsByCategoryPage');
+  }
+
+  loadMoreProducts(event){
+   this.page++;
+   console.log("getting page" + this.page);
+   this.WooCommerce.getAsync("products?filter[category]=" + this.category.slug).then( (data)=> {
+    let temp = (JSON.parse(data.body).products);
+    console.log(this.products);
+    event.complete();
+
+    if(temp.length < 10){
+      event.enable(false);
+    }
+   })
+
   }
 
 }
