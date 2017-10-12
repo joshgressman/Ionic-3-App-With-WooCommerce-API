@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { HomePage } from '../home/home';
 import { ProductsByCategoryPage} from '../products-by-category/products-by-category';
@@ -16,6 +16,8 @@ export class MenuPage {
   homePage: Component;
   WooCommerce: any;
   categories: any[];
+  //set up child view to allow the menu to be used on the more products page
+  @ViewChild('content') childNavCtrl: NavController;
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
    this.homePage = HomePage;
@@ -61,7 +63,7 @@ export class MenuPage {
   }
 
   openCategoryPage(category){
-    this.navCtrl.setRoot(ProductsByCategoryPage, {"category": category})
+    this.childNavCtrl.setRoot(ProductsByCategoryPage, {"category": category})
   }
 
 }
