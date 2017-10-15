@@ -1,5 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { NavController, Slides, ToastController } from 'ionic-angular';
+import { ProductDetailsPage } from '../product-details/product-details';
 
 //woocommcer api imported via npm install woocommerce-api --save
 //WC is the local variable
@@ -76,6 +77,10 @@ export class HomePage {
     }, (err) => {
       console.log(err);
     });
+  }
+
+  openProductPage(product){
+    this.navCtrl.push(ProductDetailsPage, {"product": product});
   }
 
 }
