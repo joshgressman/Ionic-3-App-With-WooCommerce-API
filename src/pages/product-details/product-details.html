@@ -8,6 +8,24 @@
 </ion-header>
 
 
-<ion-content padding>
+<ion-content>
+
+<ion-card>
+ <ion-slides autoplay="3000" loop="true">
+  <ion-slide *ngFor="let image of product.images">
+   <img [src]="image.src" />
+  </ion-slide>
+ </ion-slides>
+ <ion-card-content>
+  <ion-card-title>
+    {{product.title}} &nbsp;
+  <ion-chip *ngFor="let cat of product.categories" style="margin-left: 5px;">
+    <ion-label color="danger">{{ cat }}</ion-label>
+  </ion-chip>
+  </ion-card-title>
+  <p [innerHTML]="product.description"></p>
+  <button ion-button icon-left block outline color="danger"><ion-icon name="cart"></ion-icon>Add to Cart</button>
+ </ion-card-content>
+ </ion-card>
 
 </ion-content>
