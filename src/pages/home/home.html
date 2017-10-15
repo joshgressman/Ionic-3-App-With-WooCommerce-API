@@ -21,7 +21,7 @@
   <ion-grid>
    <ion-row>
     <ion-slides #productSlides>
-     <ion-slide *ngFor="let product of products">
+     <ion-slide *ngFor="let product of products" >
       <ion-card no-padding>
        <img [src]="product.featured_src"/>
        <h1 padding center>{{ product.title}}</h1>

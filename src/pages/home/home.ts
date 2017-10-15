@@ -21,6 +21,7 @@ export class HomePage {
 
   constructor(public navCtrl: NavController, public toastCtrl: ToastController) {
    this.page = 2;
+   //initalize woo commerce api
    this.WooCommerce = WC({
      url: "http://localhost:8888/woocommerce",
      consumerKey: "ck_68671b908096258d3744b8ff2511be0816df7c98",
@@ -80,7 +81,8 @@ export class HomePage {
   }
 
   openProductPage(product){
-    this.navCtrl.push(ProductDetailsPage, {"product": product});
+  this.navCtrl.push(ProductDetailsPage, {"product": product});
+
   }
 
 }
