@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
+import { Storage } from '@ionic/storage';
 import * as WC from 'woocommerce-api';
 
 @Component({
@@ -11,7 +12,7 @@ export class ProductDetailsPage {
   WooCommerce: any;
   reviews: any[] = [];
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public storage: Storage) {
     this.product = this.navParams.get("product");
     console.log("product", this.product);
 
