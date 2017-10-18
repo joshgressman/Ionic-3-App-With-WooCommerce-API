@@ -7,8 +7,11 @@
 
 </ion-header>
 
-
 <ion-content>
+
+  <ion-fab right top edge (click)="openCart()">
+   <button ion-fab color="danger"><ion-icon name="cart"></ion-icon></button>
+  </ion-fab>
 
 <ion-card>
  <ion-slides autoplay="3000" loop="true">
@@ -24,7 +27,7 @@
   </ion-chip>
   </ion-card-title>
   <p [innerHTML]="product.description"></p>
-  <button ion-button icon-left block outline color="danger" (click)="addToCart(product)"><ion-icon name="cart"></ion-icon>Add to Cart for $ {{product.price}}</button>
+  <button ion-button icon-left block outline color="danger" (click)="addToCart(product)"><ion-icon name="add"></ion-icon>Add to Cart for $ {{product.price}}</button>
  </ion-card-content>
  </ion-card>
 
