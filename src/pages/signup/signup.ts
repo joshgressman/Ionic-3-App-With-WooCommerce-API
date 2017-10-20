@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams, ToastController } from 'ionic-angular';
 
 import * as WC from 'woocommerce-api';
 
@@ -14,7 +14,7 @@ export class SignupPage {
   billing_shipping_same: boolean;
   WooCommerce: any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public toastCtrl: ToastController) {
     //Initilaizes the billing address object within newUser object
     this.newUser.billing_address = {};
     this.newUser.shipping_address = {};
@@ -40,8 +40,34 @@ checkEmail(){
  //Validates email with regular expression
  if(reg.test(this.newUser.email)){
    this.WooCommerce.getAsync('customers/email/' + this.newUser.email).then((data) => {
-     console.log("email data", data);
+    let res = (JSON.parse(data.body));
+
+    if(res.errors){
+      validEmail = true;
+
+       this.toastCtrl.create({
+         message: "Email is good to go",
+         duration: 3000
+       }).present();
+
+    } else {
+      validEmail = false;
+      this.toastCtrl.create({
+        message: "Email is registered to another account",
+        showCloseButton: true
+      }).present();
+    }
+
+    console.log(validEmail);
+
    })
+ } else {
+   validEmail = false;
+     console.log(validEmail);
+     this.toastCtrl.create({
+       message: "Invalid email, please check",
+       showCloseButton: true
+     }).present();
  }
 
 }
