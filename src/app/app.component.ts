@@ -12,7 +12,7 @@ import { MenuPage } from '../pages/menu/menu';
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  rootPage: any = SignupPage;
+  rootPage: any = MenuPage;
 
 
 
