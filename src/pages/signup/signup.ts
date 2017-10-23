@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, ToastController } from 'ionic-angular';
+import { NavController, NavParams, ToastController, AlertController } from 'ionic-angular';
 
 import * as WC from 'woocommerce-api';
 
@@ -14,7 +14,7 @@ export class SignupPage {
   billing_shipping_same: boolean;
   WooCommerce: any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public toastCtrl: ToastController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public toastCtrl: ToastController, public alertCtrl: AlertController) {
     //Initilaizes the billing address object within newUser object
     this.newUser.billing_address = {};
     this.newUser.shipping_address = {};
@@ -114,7 +114,28 @@ signup(){
      }
 
      this.WooCommerce.postAsync('customers', customerData).then((data) => {
+       let response = (JSON.parse(data.body));
        console.log(JSON.parse(data.body));
+       if(response.customer){
+         this.alertCtrl.create({
+           title: "Account Created",
+           message: "Your account has been created successfully! Please login to proceed.",
+           buttons: [
+             {
+               text: "Login",
+               handler: () => {
+                 //add link to login page
+               }
+             }
+           ]
+         }).present();
+       } else if(response.errors){
+         this.toastCtrl.create({
+           message: response.errors[0].message,
+           showCloseButton: true
+         }).present();
+       }
+
      })
 }
 
