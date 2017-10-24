@@ -3,6 +3,8 @@ import { NavController, NavParams } from 'ionic-angular';
 import { HomePage } from '../home/home';
 import { ProductsByCategoryPage} from '../products-by-category/products-by-category';
 import { SignupPage } from '../signup/signup';
+import { LoginPage } from '../login/login';
+
 //woocommcer api imported via npm install woocommerce-api --save
 //WC is the local variable
 //With the WC variable you can use the functions with the woocommerce aPI
@@ -69,6 +71,10 @@ export class MenuPage {
   openPage(pageName: string){
    if(pageName == 'signup'){
      this.navCtrl.push(SignupPage);
+   }
+
+   if(pageName == 'login'){
+     this.navCtrl.push(LoginPage);
    }
   }
 
