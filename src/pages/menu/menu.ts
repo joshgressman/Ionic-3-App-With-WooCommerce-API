@@ -1,5 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
+import { Storage } from '@ionic/storage';
 import { HomePage } from '../home/home';
 import { ProductsByCategoryPage} from '../products-by-category/products-by-category';
 import { SignupPage } from '../signup/signup';
@@ -18,12 +19,18 @@ export class MenuPage {
   homePage: Component;
   WooCommerce: any;
   categories: any[];
+  loggedIn: boolean;
+  user: any;
+
+
   //set up child view to allow the menu to be used on the more products page
   @ViewChild('content') childNavCtrl: NavController;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public storage: Storage) {
    this.homePage = HomePage;
    this.categories = [];
+   this.user = {};
+
 
    this.WooCommerce = WC({
      url: "http://localhost:8888/woocommerce",
@@ -60,8 +67,22 @@ export class MenuPage {
    });
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad MenuPage');
+  //Executed whenever user navigates to the page
+  ionViewDidEnter() {
+    this.storage.ready().then( () => {
+      this.storage.get("userLoginInfo").then( (userLoginInfo) => {
+
+        if(userLoginInfo != null) {
+          console.log("user is logged in");
+          this.user = userLoginInfo.user;
+          console.log(this.user);
+          this.loggedIn = true;
+        } else {
+          console.log("No user found");
+          this.loggedIn = false;
+        }
+      })
+    })
   }
 
   openCategoryPage(category){
