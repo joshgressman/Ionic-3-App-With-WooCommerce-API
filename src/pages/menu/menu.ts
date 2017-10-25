@@ -1,10 +1,11 @@
 import { Component, ViewChild } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams, ModalController } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 import { HomePage } from '../home/home';
 import { ProductsByCategoryPage} from '../products-by-category/products-by-category';
 import { SignupPage } from '../signup/signup';
 import { LoginPage } from '../login/login';
+import { CartPage } from '../cart/cart';
 
 //woocommcer api imported via npm install woocommerce-api --save
 //WC is the local variable
@@ -26,7 +27,7 @@ export class MenuPage {
   //set up child view to allow the menu to be used on the more products page
   @ViewChild('content') childNavCtrl: NavController;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public storage: Storage) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public storage: Storage, public modalCtrl: ModalController) {
    this.homePage = HomePage;
    this.categories = [];
    this.user = {};
@@ -97,6 +98,20 @@ export class MenuPage {
    if(pageName == 'login'){
      this.navCtrl.push(LoginPage);
    }
+
+   if(pageName == 'logout'){
+     this.storage.remove("userLoginInfo").then( () => {
+       this.user = {};
+       this.loggedIn = false;
+
+     })
+   }
+
+   if(pageName == 'cart') {
+     let modal = this.modalCtrl.create(CartPage);
+     modal.present();
+   }
+
   }
 
 }
