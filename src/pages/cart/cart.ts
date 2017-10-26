@@ -110,4 +110,12 @@ export class CartPage {
 
   }
 
+  checkout(){
+    this.storage.get("userLoginInfo").then((data) => {
+      if(data != null){
+        this.navCtrl.push(CheckoutPage)
+      }
+    })
+  }
+
 }

@@ -25,6 +25,8 @@
       <p>{{ category.description}}</p>
      </ion-item>
 
+     <ion-item-divider color="danger">Account</ion-item-divider>
+
      <ion-item (click)="openPage('signup')" menuClose *ngIf="!loggedIn">
          <ion-icon name="md-clipboard" item-left large></ion-icon>
          <h2>Sign Up</h2>
