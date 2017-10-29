@@ -11,7 +11,7 @@ export class CheckoutPage {
   WooCommerce: any;
   newOrder: any;
   paymentMethods: any[];
-  paymontMethod: any;
+  paymentMethod: any;
   billing_shipping_same: boolean;
   userInfo: any;
 
@@ -62,6 +62,12 @@ export class CheckoutPage {
     let orderItems: any[] = [];
     let data: any = [];
     let paymentData: any = {}
+
+    this.paymentMethods.forEach((element, index) => {
+      if(element.method_id == this.paymentMethod){
+        paymentData = element;
+      }
+    });
   }
 
 }
