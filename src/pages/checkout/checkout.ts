@@ -58,4 +58,10 @@ export class CheckoutPage {
     }
   }
 
+  placeOrder(){
+    let orderItems: any[] = [];
+    let data: any = [];
+    let paymentData: any = {}
+  }
+
 }
