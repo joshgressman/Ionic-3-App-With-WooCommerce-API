@@ -68,6 +68,22 @@ export class CheckoutPage {
         paymentData = element;
       }
     });
+
+    data = {
+      payment_details: {
+        method_id: paymentData.method_id,
+        method_title: paymentData.method_title,
+        paid: true
+      },
+
+      billing_address: this.newOrder.billing_address,
+      shipping_address: this.newOrder.shipping_address,
+      customer_id: this.userInfo.id || '',
+      line_items: orderItems
+    };
+
+    
+
   }
 
 }
