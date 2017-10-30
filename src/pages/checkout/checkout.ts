@@ -82,7 +82,31 @@ export class CheckoutPage {
       line_items: orderItems
     };
 
-    
+     if(paymentData.method_id == 'paypal'){
+
+     } else {
+       this.storage.get("cart").then( (cart) => {
+         console.log("cart items", cart);
+
+         cart.forEach( (element, index) => {
+           orderItems.push({
+             product_id: element.product.id,
+             quantity: element.qty
+           });
+         });
+
+         data.line_items = orderItems;
+
+         let orderData: any = {};
+
+         orderData.order = data;
+
+         this.WooCommerce.postAsync("orders", orderData).then( (data) => {
+           console.log(JSON.parse(data.body).order);
+         })
+
+       })
+     }
 
   }
 
