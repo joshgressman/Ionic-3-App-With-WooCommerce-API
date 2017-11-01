@@ -103,29 +103,23 @@ export class CheckoutPage {
         total = total + (element.product.price * element.qty);
       });
       console.log("total", total);
+      let payment = new PayPalPayment(total.toString(), 'USD', 'Description', 'sale');
+      this.payPal.renderSinglePaymentUI(payment).then((response) => {
+        // Successfully paid
+        alert(JSON.stringify(response));
+
+        data.line_items = orderItems;
+        console.log(data);
+        let orderData: any = {};
+
+        orderData.order = data;
+
+        this.WooCommerce.postAsync('orders', orderData, (err, data, res) => {
+          alert("order placed successfully");
+        })
     })
 
-    let payment = new PayPalPayment('3.33', 'USD', 'Description', 'sale');
-    this.payPal.renderSinglePaymentUI(payment).then(() => {
-      // Successfully paid
 
-      // Example sandbox response
-      //
-      // {
-      //   "client": {
-      //     "environment": "sandbox",
-      //     "product_name": "PayPal iOS SDK",
-      //     "paypal_sdk_version": "2.16.0",
-      //     "platform": "iOS"
-      //   },
-      //   "response_type": "payment",
-      //   "response": {
-      //     "id": "PAY-1AB23456CD789012EF34GHIJ",
-      //     "state": "approved",
-      //     "create_time": "2016-10-03T13:33:33Z",
-      //     "intent": "sale"
-      //   }
-      // }
     }, () => {
       // Error or render dialog closed without being successful
     });
