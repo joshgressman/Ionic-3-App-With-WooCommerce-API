@@ -17,7 +17,7 @@ export class CheckoutPage {
   billing_shipping_same: boolean;
   userInfo: any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public storage: Storage, public alertCtrl: AlertController, private paypal: PayPal) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public storage: Storage, public alertCtrl: AlertController, private payPal: PayPal) {
    this.newOrder = {};
    this.newOrder.billing_address = {};
    this.newOrder.shipping_address = {};
@@ -85,6 +85,56 @@ export class CheckoutPage {
     };
 
      if(paymentData.method_id == 'paypal'){
+     //Paypal Integration
+     this.payPal.init({
+  PayPalEnvironmentProduction: 'YOUR_PRODUCTION_CLIENT_ID',
+  PayPalEnvironmentSandbox: 'YOUR_SANDBOX_CLIENT_ID'
+}).then(() => {
+  // Environments: PayPalEnvironmentNoNetwork, PayPalEnvironmentSandbox, PayPalEnvironmentProduction
+  this.payPal.prepareToRender('PayPalEnvironmentSandbox', new PayPalConfiguration({
+    // Only needed if you get an "Internal Service Error" after PayPal login!
+    //payPalShippingAddressOption: 2 // PayPalShippingAddressOptionPayPal
+  })).then(() => {
+    //calculate payment from cart
+    this.storage.get('cart').then( (cart) => {
+      let total = 0.00;
+      cart.forEach((element, index) => {
+        orderItems.push({product_id: element.product.id, quantity: element.qty});
+        total = total + (element.product.price * element.qty);
+      });
+      console.log("total", total);
+    })
+
+    let payment = new PayPalPayment('3.33', 'USD', 'Description', 'sale');
+    this.payPal.renderSinglePaymentUI(payment).then(() => {
+      // Successfully paid
+
+      // Example sandbox response
+      //
+      // {
+      //   "client": {
+      //     "environment": "sandbox",
+      //     "product_name": "PayPal iOS SDK",
+      //     "paypal_sdk_version": "2.16.0",
+      //     "platform": "iOS"
+      //   },
+      //   "response_type": "payment",
+      //   "response": {
+      //     "id": "PAY-1AB23456CD789012EF34GHIJ",
+      //     "state": "approved",
+      //     "create_time": "2016-10-03T13:33:33Z",
+      //     "intent": "sale"
+      //   }
+      // }
+    }, () => {
+      // Error or render dialog closed without being successful
+    });
+  }, () => {
+    // Error in configuration
+  });
+}, () => {
+  // Error in initialization, maybe PayPal isn't supported or something else
+});
 
      } else {
        this.storage.get("cart").then( (cart) => {
