@@ -116,6 +116,19 @@ export class CheckoutPage {
 
         this.WooCommerce.postAsync('orders', orderData, (err, data, res) => {
           alert("order placed successfully");
+
+          let response = (JSON.parse(data.body).order);
+
+          this.alertCtrl.create({
+            title: "Order placed successfully!",
+            message: "Your order number is" + response.order_number,
+            buttons: [{
+              text: "OK",
+              handler: () => {
+                this.navCtrl.setRoot(HomePage);
+              }
+            }]
+          }).present();
         })
     })
 
